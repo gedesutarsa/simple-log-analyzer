@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<!-- 
+	<task:executor id="web-async-task-executor" pool-size="50" />
+	 -->
+	
+	<bean id="web-async-task-executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+    	<property name="corePoolSize" value="5" />
+    	<property name="maxPoolSize" value="10" />
+    	<property name="queueCapacity" value="25" />
+	</bean>
+	<bean 
+		name="batchWorkingDataTrxManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<description>Ini adalah bean untuk transaction manager</description>
+		<constructor-arg index="0" 
+		    ref="batchWorkingDataSource"/>
+		
+	</bean>
+	
+ 	<bean id="batchEngineJobRepo"
+		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
+		<property name="dataSource" ref="batchWorkingDataSource" />
+		<property name="transactionManager" ref="batchWorkingDataTrxManager" />
+		<property name="databaseType" value="mysql" />
+	</bean>
+ 	
+ 	
+	
+	
+	<bean 
+		name="batchEngineJobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="batchEngineJobRepo"/>
+		
+	</bean>
+	
+	
+	
+		
+	
+	
+	
+</beans>

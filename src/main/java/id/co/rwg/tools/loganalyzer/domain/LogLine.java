@@ -1,4 +1,4 @@
-package id.co.rwg.tools.domain;
+package id.co.rwg.tools.loganalyzer.domain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -137,6 +137,16 @@ public class LogLine implements Serializable{
 	@Lob
 	@Column(name="err_stack_trace" )
 	private String stackTrace ; 
+	
+	
+	
+	
+	/**
+	 * reference ke {@link ExtractLogHeader}
+	 * column : header_pk
+	 */
+	@Column(name="header_pk" )
+	private Long headerId ; 
 	
 	/**
 	 * fqcn dari class yang membuat masalah 
@@ -298,4 +308,31 @@ public class LogLine implements Serializable{
 	public String getStackTrace() {
 		return stackTrace;
 	}
+	
+	
+	/**
+	 * reference ke {@link ExtractLogHeader}
+	 * column : header_pk
+	 */
+	public void setHeaderId(Long headerId) {
+		this.headerId = headerId;
+	}
+	/**
+	 * reference ke {@link ExtractLogHeader}
+	 * column : header_pk
+	 */
+	public Long getHeaderId() {
+		return headerId;
+	}
+	@Override
+	public String toString() {
+		return "LogLine {\nid=" + id + ",\n systemCode=" + systemCode
+				+ ",\n logDate=" + logDate + ",\n threadName=" + threadName
+				+ ",\n loggerPriority=" + loggerPriority + ",\n codeFqcn="
+				+ codeFqcn + ",\n codeLinePosition=" + codeLinePosition
+				+ ",\n codeMethod=" + codeMethod + ",\n message=" + message
+				+ ",\n stackTrace=" + stackTrace + "\n}";
+	}
+	
+	
 }

@@ -57,6 +57,8 @@
 		</property>
 	</bean>
 	
-	
+	<bean
+		name="extract-log-service" 
+	class="id.co.rwg.tools.service.impl.ExtractLogFileServiceImpl"></bean>
 	
 </beans>

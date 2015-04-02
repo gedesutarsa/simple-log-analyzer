@@ -1,4 +1,4 @@
-package id.co.rwg.tools.controller;
+package id.co.rwg.tools.loganalyzer.controller;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package id.co.rwg.tools.domain;
+package id.co.rwg.tools.loganalyzer.domain;
 
 import java.io.Serializable;
 

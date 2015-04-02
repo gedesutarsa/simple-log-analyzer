@@ -61,7 +61,11 @@
             </props>
         </property>    	
 	    </bean>
-  		
+  		<bean
+  			name="general-purpose-dao" 
+  			class="id.co.rwg.tools.dao.impl.GeneralPurposeDaoImpl">
+  			
+  		</bean>
     
-	
+
 </beans>

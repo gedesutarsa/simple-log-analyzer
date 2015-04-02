@@ -37,11 +37,11 @@
     </logger>
     
  	<logger name="org.hibernate.type">
-        <level value="TRACE"/>
+        <level value="ERROR"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
 	<root>
-		<level value="TRACE" />
+		<level value="DEBUG" />
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="ALL"/>
 	</root>

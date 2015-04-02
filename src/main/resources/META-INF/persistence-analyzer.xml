@@ -4,9 +4,10 @@
 	
 		
 		
-	<class>id.co.rwg.tools.domain.AnalizedMethod</class>			
-	<class>id.co.rwg.tools.domain.AnalyzedSystem</class>
-	<class>id.co.rwg.tools.domain.LogLine</class>	
+	<class>id.co.rwg.tools.loganalyzer.domain.AnalizedMethod</class>			
+	<class>id.co.rwg.tools.loganalyzer.domain.AnalyzedSystem</class>
+	<class>id.co.rwg.tools.loganalyzer.domain.LogLine</class>	
+	<class>id.co.rwg.tools.loganalyzer.domain.ExtractLogHeader</class>
 		
 		
 	</persistence-unit>

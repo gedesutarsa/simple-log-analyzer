@@ -2,16 +2,70 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
+	 
+	 
+	 
+	 
+	<bean class="id.co.rwg.tools.loganalyzer.batch.extractor.LogFileReader" 
+		name="file-basedlog4jlog-reader"
+		scope="step">
+		<description>reader file log4j</description>
+	</bean>
+	<bean class="id.co.rwg.tools.loganalyzer.batch.extractor.LogFileProcessor" 
+		name="file-basedlog4jlog-processor"
+		scope="step">
+	</bean>
+	<bean class="org.springframework.batch.item.database.JdbcBatchItemWriter" 
+		name="file-basedlog4jlog-writer"
+		scope="step">
+		
+		<description >writer ke database log_line</description>
+		<property name="itemSqlParameterSourceProvider">
+		<bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" /> </property>
+		<property name="sql"
+    		value="insert into log_line( 
+    			code_fqcn 		, code_line_no		, code_method, 
+    			log_date		, logger_priority	, err_message, 
+    			err_stack_trace, system_code 		, thread_name) 
+    		 values ( 
+    		 	:codeFqcn 	, :codeLinePosition , :codeMethod , 
+    		 	:logDate 	, :loggerPriority	, :message , 
+    		 	:stackTrace , :systemCode		, :threadName
+    		 )" />
+		<property name="dataSource" ref="batchWorkingDataSource" />
+	</bean>
 	
 	
+	<batch:job 
+		id="bulk-absorb-un-compressed-log" 
+		job-repository="batchEngineJobRepo">
+		<batch:description>
+		worker untuk membaca dan extract log plain
+		</batch:description>
+			<batch:step 
+				id="extract-mx-message-logs-separated-from-main-job__extract-message-logs"
+				allow-start-if-complete="true">
+				<batch:tasklet
+					transaction-manager="batchWorkingDataTrxManager">
+					<batch:chunk commit-interval="1"
+						reader="file-basedlog4jlog-reader"
+						processor="file-basedlog4jlog-processor"
+						writer="file-basedlog4jlog-writer"/>
+				</batch:tasklet>
+			</batch:step>
+			
+			
+			
+			
+	</batch:job>	
 	
-	<batch:>
-	</batch:>
-	
+		
 	
 	
 	
